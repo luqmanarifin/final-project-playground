@@ -12,6 +12,7 @@
   $client_secret = getenv('AUTH0_CLIENT_SECRET');
   $redirect_uri  = getenv('AUTH0_CALLBACK_URL');
   $audience      = getenv('AUTH0_AUDIENCE');
+  $scope         = 'openid profile';
 
   if($audience == ''){
     $audience = 'https://' . $domain . '/userinfo';
@@ -23,7 +24,7 @@
     'client_secret' => $client_secret,
     'redirect_uri' => $redirect_uri,
     'audience' => $audience,
-    'scope' => 'openid profile',
+    'scope' => $scope,
     'persist_id_token' => true,
     'persist_access_token' => true,
     'persist_refresh_token' => true,
@@ -31,15 +32,19 @@
 
   $userInfo = $auth0->getUser();
 
+  echo $scope."</br>";
+  echo $domain."</br>";
+  echo $client_id."</br>";
 
 ?>
+
+
 <html>
     <head>
         <script src="http://code.jquery.com/jquery-3.1.0.min.js" type="text/javascript"></script>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- font awesome from BootstrapCDN -->
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -63,7 +68,7 @@
                 <h1 id="logo"><img src="//cdn.auth0.com/samples/auth0_logo_final_blue_RGB.png" /></h1>
                 <img class="avatar" src="<?php echo $userInfo['picture'] ?>"/>
                 <h2>Welcome <span class="nickname"><?php echo $userInfo['nickname'] ?></span></h2>
-                <a class="btn btn-warning btn-logout" href="/logout.php">Logout</a>
+                <a class="btn btn-warning btn-logout" href="logout.php">Logout</a>
               </div>
               <?php endif ?>
             </div>
