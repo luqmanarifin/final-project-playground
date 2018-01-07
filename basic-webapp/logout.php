@@ -8,6 +8,7 @@ $client_id     = getenv('AUTH0_CLIENT_ID');
 $client_secret = getenv('AUTH0_CLIENT_SECRET');
 $redirect_uri  = getenv('AUTH0_CALLBACK_URL');
 $audience      = getenv('AUTH0_AUDIENCE');
+$returnTo      = 'http://localhost/basic-webapp/';
 
 if($audience == ''){
     $audience = 'https://' . $domain . '/userinfo';
@@ -25,5 +26,7 @@ $auth0 = new Auth0([
 ]);
 
 $auth0->logout(); 
-header('Location: http://' . $_SERVER['HTTP_HOST']);
+
+header('Location: https://'. $domain . '/v2/logout?returnTo=' . $returnTo);
+// header('Location: http://' . $_SERVER['HTTP_HOST']);
 die();
